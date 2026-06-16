@@ -200,7 +200,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:#aaa}
           <div class="pay-icon">🏦</div>
           <div class="pay-name">Bancolombia</div>
         </div>
-        <div class="pay-opt" id="opt-daviplata" onclick="elegirPago('Daviplata')">
+        <div class="pay-opt" id="opt-bre-b" onclick="elegirPago('Bre-B')">
           <div class="pay-icon">💳</div>
           <div class="pay-name">Bre-B</div>
         </div>
@@ -221,7 +221,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:#aaa}
         <p class="note">Transfiere el valor exacto y guarda el comprobante de la transacción.</p>
       </div>
 
-      <div id="info-Bre-B" style="display:none" class="pay-info-box">
+      <div id="info-bre-b" style="display:none" class="pay-info-box">
         <p><strong>💳 Bre-B</strong></p>
         <p>Llave BREVE: <strong>320 513 7600</strong></p>
         <p>Titular: <strong>José Osorio Barrios</strong></p>
@@ -330,10 +330,10 @@ function elegirPago(met) {
   metodoPago = met;
   document.getElementById('opt-nequi').classList.toggle('active', met==='Nequi');
   document.getElementById('opt-bancolombia').classList.toggle('active', met==='Bancolombia');
-  document.getElementById('opt-Bre-B').classList.toggle('active', met==='Bre-B');
+  document.getElementById('opt-bre-b').classList.toggle('active', met==='Bre-B');
   document.getElementById('info-nequi').style.display = met==='Nequi' ? 'block' : 'none';
   document.getElementById('info-bancolombia').style.display = met==='Bancolombia' ? 'block' : 'none';
-  document.getElementById('info-Bre-B').style.display = met==='Bre-B' ? 'block' : 'none';
+  document.getElementById('info-bre-b').style.display = met==='Bre-B' ? 'block' : 'none';
   document.getElementById('btn-continuar').disabled = false;
 }
 
@@ -351,8 +351,8 @@ function volverModulos() {
   document.getElementById('view-modules').style.display = 'block';
   metodoPago = '';
   document.getElementById('btn-continuar').disabled = true;
-  ['opt-nequi','opt-bancolombia','opt-Bre-B'].forEach(id => document.getElementById(id).classList.remove('active'));
-  ['info-nequi','info-bancolombia','info-Bre-B'].forEach(id => document.getElementById(id).style.display = 'none');
+  ['opt-nequi','opt-bancolombia','opt-bre-b'].forEach(id => document.getElementById(id).classList.remove('active'));
+  ['info-nequi','info-bancolombia','info-bre-b'].forEach(id => document.getElementById(id).style.display = 'none');
   setStep(1);
   window.scrollTo(0,0);
 }
