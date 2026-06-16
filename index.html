@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>HENLI — Software para nutricionistas</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',sans-serif;background:#f2f7f3;color:#1a1a1a;min-height:100vh}
+
+/* HERO */
+.hero{background:#1a5c2e;padding:44px 24px 40px;text-align:center}
+.logo-wrap{width:80px;height:80px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.hero h1{color:#fff;font-size:26px;font-weight:900;letter-spacing:-0.5px;margin-bottom:6px}
+.hero p{color:#a8d5b5;font-size:14px;max-width:380px;margin:0 auto}
+
+/* NAV STEPS */
+.steps{display:flex;background:#fff;border-bottom:1px solid #e0e8e2}
+.step{flex:1;padding:12px 8px;text-align:center;font-size:12px;font-weight:600;color:#aaa;border-bottom:2px solid transparent;transition:all .2s}
+.step.active{color:#1a5c2e;border-color:#1a5c2e}
+.step.done{color:#888;border-color:#a8d5b5}
+
+/* LAYOUT */
+.container{max-width:680px;margin:0 auto;padding:28px 16px}
+
+/* CARDS MÓDULOS */
+.modules-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.mod-card{background:#fff;border-radius:14px;border:1px solid #ddeae0;padding:20px 18px;display:flex;flex-direction:column;gap:8px;cursor:pointer;transition:border-color .15s,transform .1s}
+.mod-card:hover{border-color:#1a5c2e;transform:translateY(-2px)}
+.mod-card.featured{border:2px solid #1a5c2e}
+.mod-card.disabled{opacity:.5;cursor:default;pointer-events:none}
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;width:fit-content}
+.badge-hot{background:#1a5c2e;color:#fff}
+.badge-avail{background:#eaf3de;color:#27500a}
+.badge-soon{background:#f0f0f0;color:#888}
+.mod-card h3{font-size:15px;font-weight:700;color:#1a3320}
+.mod-card .desc{font-size:12px;color:#666;line-height:1.55;flex:1}
+.price-block{margin-top:4px}
+.price-old{font-size:12px;color:#bbb;text-decoration:line-through}
+.price-new{font-size:22px;font-weight:900;color:#1a5c2e;line-height:1}
+.price-cop{font-size:11px;color:#888;margin-top:2px}
+.save-tag{display:inline-block;background:#eaf3de;color:#27500a;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;margin-top:4px}
+.btn-primary{width:100%;padding:11px;background:#1a5c2e;color:#fff;border:none;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;margin-top:auto;transition:background .15s}
+.btn-primary:hover{background:#145224}
+.btn-primary:disabled{background:#c8d8cc;cursor:default}
+
+/* PANEL */
+.panel{background:#fff;border-radius:14px;border:1px solid #ddeae0;padding:24px}
+.panel-label{font-size:12px;color:#888;margin-bottom:3px}
+.panel-title{font-size:17px;font-weight:800;color:#1a5c2e;margin-bottom:4px}
+.panel-sub{font-size:13px;color:#aaa;margin-bottom:20px}
+.divider{height:1px;background:#edf2ee;margin:16px 0}
+.section-label{font-size:12px;font-weight:700;color:#444;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+
+/* MÉTODOS DE PAGO */
+.pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pay-opt{border:1.5px solid #ddd;border-radius:10px;padding:14px 12px;text-align:center;cursor:pointer;transition:all .15s;background:#fafafa}
+.pay-opt:hover{border-color:#1a5c2e}
+.pay-opt.active{border-color:#1a5c2e;background:#eaf3de}
+.pay-opt .pay-icon{font-size:26px;margin-bottom:6px}
+.pay-opt .pay-name{font-size:13px;font-weight:700;color:#1a3320}
+.pay-info-box{background:#f4fbf6;border:1px solid #c4ddc8;border-radius:10px;padding:16px;margin-bottom:16px}
+.pay-info-box p{font-size:13px;color:#333;margin-bottom:5px;line-height:1.5}
+.pay-info-box strong{color:#1a5c2e}
+.pay-info-box .note{font-size:12px;color:#888;margin-top:8px}
+.btn-secondary{width:100%;padding:10px;background:#fff;color:#1a5c2e;border:1.5px solid #1a5c2e;border-radius:9px;font-size:13px;font-weight:700;cursor:pointer;margin-top:10px;transition:background .15s}
+.btn-secondary:hover{background:#f0f7f1}
+
+/* FORMULARIO */
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:11px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.field input,.field select{width:100%;padding:10px 13px;border:1px solid #ddd;border-radius:8px;font-size:14px;color:#222;background:#fff;font-family:'Inter',sans-serif;outline:none;transition:border-color .15s}
+.field input:focus,.field select:focus{border-color:#1a5c2e}
+.field input[readonly]{background:#f0f7f1;color:#1a5c2e;font-weight:700}
+.upload-zone{border:2px dashed #b5d4bc;border-radius:10px;padding:22px;text-align:center;cursor:pointer;transition:all .15s;background:#fafdf9}
+.upload-zone:hover{border-color:#1a5c2e;background:#f0f7f1}
+.upload-zone.filled{border-color:#1a5c2e;background:#eaf3de}
+.upload-zone .u-icon{font-size:28px;color:#1a5c2e;margin-bottom:6px}
+.upload-zone p{font-size:13px;color:#666}
+.upload-zone .u-hint{font-size:11px;color:#aaa;margin-top:4px}
+.error-msg{color:#c0392b;font-size:12px;margin-top:6px;display:none}
+
+/* ÉXITO */
+.success-wrap{text-align:center;padding:20px 10px}
+.success-icon{font-size:56px;margin-bottom:16px}
+.success-wrap h2{font-size:20px;font-weight:900;color:#1a5c2e;margin-bottom:8px}
+.success-wrap p{font-size:14px;color:#555;line-height:1.6;max-width:360px;margin:0 auto}
+.social-row{display:flex;gap:12px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.btn-wa{background:#e8f5e9;color:#1b5e20;border:1px solid #a5d6a7;border-radius:9px;padding:10px 20px;font-size:13px;font-weight:700;text-decoration:none;cursor:pointer;font-family:'Inter',sans-serif}
+.btn-rr{background:#e8f4fd;color:#0d47a1;border:1px solid #90caf9;border-radius:9px;padding:10px 20px;font-size:13px;font-weight:700;text-decoration:none;cursor:pointer;font-family:'Inter',sans-serif}
+
+/* FOOTER */
+footer{text-align:center;padding:24px;font-size:12px;color:#aaa}
+
+@media(max-width:500px){
+  .form-row{grid-template-columns:1fr}
+  .modules-grid{grid-template-columns:1fr}
+  .pay-grid{grid-template-columns:1fr 1fr}
+  .hero h1{font-size:20px}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="logo-wrap">
+    <svg width="48" height="48" viewBox="0 0 100 100" fill="none">
+      <rect x="8" y="5" width="54" height="68" rx="6" stroke="#1a5c2e" stroke-width="7" fill="white"/>
+      <rect x="18" y="44" width="30" height="22" rx="3" stroke="#1a5c2e" stroke-width="5" fill="none"/>
+      <line x1="28" y1="44" x2="28" y2="66" stroke="#1a5c2e" stroke-width="4"/>
+      <line x1="38" y1="44" x2="38" y2="66" stroke="#1a5c2e" stroke-width="4"/>
+      <line x1="18" y1="55" x2="48" y2="55" stroke="#1a5c2e" stroke-width="4"/>
+      <text x="16" y="38" font-family="Arial" font-weight="900" font-size="28" fill="#1a5c2e">H</text>
+      <circle cx="70" cy="64" r="22" stroke="#1a5c2e" stroke-width="6" fill="white"/>
+      <text x="59" y="71" font-family="Arial" font-size="18" fill="#1a5c2e">🍴</text>
+    </svg>
+  </div>
+  <h1>HENLI</h1>
+  <p>Software en Excel para nutricionistas — herramientas clínicas y de rotulado</p>
+</div>
+
+<div class="steps">
+  <div class="step active" id="step1">1 — Módulo</div>
+  <div class="step" id="step2">2 — Pago</div>
+  <div class="step" id="step3">3 — Registro</div>
+</div>
+
+<!-- VISTA 1: MÓDULOS -->
+<div id="view-modules">
+  <div class="container">
+    <div class="modules-grid">
+
+      <div class="mod-card featured">
+        <div class="badge badge-hot">Más popular</div>
+        <h3>Combo Clínica + Rotulado</h3>
+        <p class="desc">Acceso completo a los dos módulos disponibles. La opción más completa al mejor precio.</p>
+        <div class="price-block">
+          <div class="price-old">$590.000</div>
+          <div class="price-new">$380.000</div>
+          <div class="price-cop">COP · pago único</div>
+          <div class="save-tag">Ahorras $210.000</div>
+        </div>
+        <button class="btn-primary" onclick="elegirModulo('Combo Clínica + Rotulado','$380.000')">Comprar combo</button>
+      </div>
+
+      <div class="mod-card">
+        <div class="badge badge-avail">Disponible</div>
+        <h3>Módulo Nutrición Clínica</h3>
+        <p class="desc">Valoración, diagnóstico y seguimiento nutricional para consulta clínica.</p>
+        <div class="price-block">
+          <div class="price-old">$350.000</div>
+          <div class="price-new">$260.000</div>
+          <div class="price-cop">COP · pago único</div>
+        </div>
+        <button class="btn-primary" onclick="elegirModulo('Módulo Nutrición Clínica','$260.000')">Comprar módulo</button>
+      </div>
+
+      <div class="mod-card">
+        <div class="badge badge-avail">Disponible</div>
+        <h3>Módulo Rotulado Nutricional</h3>
+        <p class="desc">Cálculo y generación de etiquetas nutricionales para productos alimenticios.</p>
+        <div class="price-block">
+          <div class="price-old">$240.000</div>
+          <div class="price-new">$180.000</div>
+          <div class="price-cop">COP · pago único</div>
+        </div>
+        <button class="btn-primary" onclick="elegirModulo('Módulo Rotulado Nutricional','$180.000')">Comprar módulo</button>
+      </div>
+
+      <div class="mod-card disabled">
+        <div class="badge badge-soon">Próximamente</div>
+        <h3>Módulo Parenteral</h3>
+        <p class="desc">Soporte nutricional parenteral y enteral hospitalario.</p>
+        <div class="price-block"><div class="price-cop">Disponible pronto</div></div>
+        <button class="btn-primary" disabled>Próximamente</button>
+      </div>
+
+      <div class="mod-card disabled">
+        <div class="badge badge-soon">Próximamente</div>
+        <h3>Módulo Estandarización</h3>
+        <p class="desc">Estandarización de recetas y minutas institucionales.</p>
+        <div class="price-block"><div class="price-cop">Disponible pronto</div></div>
+        <button class="btn-primary" disabled>Próximamente</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- VISTA 2: PAGO -->
+<div id="view-pago" style="display:none">
+  <div class="container">
+    <div class="panel">
+      <div class="panel-label">Módulo seleccionado</div>
+      <div class="panel-title" id="pago-modulo"></div>
+      <div class="panel-sub" id="pago-precio"></div>
+
+      <div class="divider"></div>
+      <div class="section-label">Método de pago</div>
+
+      <div class="pay-grid">
+        <div class="pay-opt" id="opt-nequi" onclick="elegirPago('Nequi')">
+          <div class="pay-icon">📱</div>
+          <div class="pay-name">Nequi</div>
+        </div>
+        <div class="pay-opt" id="opt-bancolombia" onclick="elegirPago('Bancolombia')">
+          <div class="pay-icon">🏦</div>
+          <div class="pay-name">Bancolombia</div>
+        </div>
+      </div>
+
+      <div id="info-nequi" style="display:none" class="pay-info-box">
+        <p><strong>Nequi</strong></p>
+        <p>Número: <strong>301 661 7150</strong></p>
+        <p>Nombre: <strong>HENLI Nutrición</strong></p>
+        <p class="note">Transfiere el valor exacto y guarda la captura de pantalla del comprobante.</p>
+      </div>
+
+      <div id="info-bancolombia" style="display:none" class="pay-info-box">
+        <p><strong>Bancolombia — Transferencia</strong></p>
+        <p>Tipo de cuenta: <strong>Ahorros</strong></p>
+        <p>Número: <strong>XXX-XXXXXX-XX</strong></p>
+        <p>Titular: <strong>HENLI Nutrición</strong></p>
+        <p class="note">Transfiere el valor exacto y guarda el comprobante de la transacción.</p>
+      </div>
+
+      <button class="btn-primary" id="btn-continuar" onclick="irFormulario()" disabled>Ya realicé el pago — continuar</button>
+      <button class="btn-secondary" onclick="volverModulos()">Volver a módulos</button>
+    </div>
+  </div>
+</div>
+
+<!-- VISTA 3: FORMULARIO -->
+<div id="view-formulario" style="display:none">
+  <div class="container">
+    <div class="panel">
+      <div class="panel-label">Completando registro para</div>
+      <div class="panel-title" id="form-modulo"></div>
+      <div class="divider"></div>
+
+      <div class="form-row">
+        <div class="field">
+          <label>Nombre completo</label>
+          <input type="text" id="f-nombre" placeholder="Ej: María González"/>
+        </div>
+        <div class="field">
+          <label>Celular</label>
+          <input type="tel" id="f-celular" placeholder="Ej: 3001234567"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Correo electrónico</label>
+        <input type="email" id="f-correo" placeholder="Ej: maria@clinica.com"/>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label>Ciudad</label>
+          <input type="text" id="f-ciudad" placeholder="Ej: Bogotá"/>
+        </div>
+        <div class="field">
+          <label>Método de pago</label>
+          <input type="text" id="f-metodo" readonly/>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Comprobante de pago</label>
+        <div class="upload-zone" id="upload-zone" onclick="document.getElementById('f-file').click()">
+          <div class="u-icon">📎</div>
+          <p id="upload-txt">Haz clic para adjuntar tu comprobante</p>
+          <div class="u-hint">JPG, PNG o PDF · máx. 5MB</div>
+        </div>
+        <input type="file" id="f-file" accept="image/*,application/pdf" style="display:none" onchange="onFileChange(this)"/>
+      </div>
+
+      <div class="error-msg" id="f-error"></div>
+      <button class="btn-primary" id="btn-enviar" onclick="enviar()">Enviar registro</button>
+    </div>
+  </div>
+</div>
+
+<!-- VISTA 4: ÉXITO -->
+<div id="view-exito" style="display:none">
+  <div class="container">
+    <div class="panel">
+      <div class="success-wrap">
+        <div class="success-icon">✅</div>
+        <h2>¡Registro completado!</h2>
+        <p>Tu compra de <strong id="exito-modulo" style="color:#1a5c2e"></strong> fue registrada con éxito.<br><br>El equipo de HENLI revisará tu pago y te enviará el archivo a tu correo en menos de 24 horas hábiles.</p>
+        <div class="social-row">
+          <a class="btn-wa" href="https://wa.me/573016617150" target="_blank">💬 Contactar por WhatsApp</a>
+          <a class="btn-rr" href="https://linktr.ee/henli_excel" target="_blank">🔗 Redes sociales HENLI</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>HENLI · Software para nutricionistas · 2026</footer>
+
+<script>
+let moduloSel = '';
+let precioSel = '';
+let metodoPago = '';
+let fileB64 = '';
+let fileName = '';
+
+function setStep(n) {
+  [1,2,3].forEach(i => {
+    const el = document.getElementById('step'+i);
+    el.className = 'step' + (i < n ? ' done' : i === n ? ' active' : '');
+  });
+}
+
+function elegirModulo(m, p) {
+  moduloSel = m; precioSel = p;
+  document.getElementById('pago-modulo').textContent = m;
+  document.getElementById('pago-precio').textContent = p + ' COP';
+  document.getElementById('view-modules').style.display = 'none';
+  document.getElementById('view-pago').style.display = 'block';
+  setStep(2);
+  window.scrollTo(0,0);
+}
+
+function elegirPago(met) {
+  metodoPago = met;
+  document.getElementById('opt-nequi').classList.toggle('active', met==='Nequi');
+  document.getElementById('opt-bancolombia').classList.toggle('active', met==='Bancolombia');
+  document.getElementById('info-nequi').style.display = met==='Nequi' ? 'block' : 'none';
+  document.getElementById('info-bancolombia').style.display = met==='Bancolombia' ? 'block' : 'none';
+  document.getElementById('btn-continuar').disabled = false;
+}
+
+function irFormulario() {
+  document.getElementById('view-pago').style.display = 'none';
+  document.getElementById('view-formulario').style.display = 'block';
+  document.getElementById('form-modulo').textContent = moduloSel;
+  document.getElementById('f-metodo').value = metodoPago;
+  setStep(3);
+  window.scrollTo(0,0);
+}
+
+function volverModulos() {
+  document.getElementById('view-pago').style.display = 'none';
+  document.getElementById('view-modules').style.display = 'block';
+  metodoPago = '';
+  document.getElementById('btn-continuar').disabled = true;
+  ['opt-nequi','opt-bancolombia'].forEach(id => document.getElementById(id).classList.remove('active'));
+  ['info-nequi','info-bancolombia'].forEach(id => document.getElementById(id).style.display = 'none');
+  setStep(1);
+  window.scrollTo(0,0);
+}
+
+function onFileChange(input) {
+  if (!input.files || !input.files[0]) return;
+  const file = input.files[0];
+  if (file.size > 5 * 1024 * 1024) {
+    alert('El archivo supera los 5MB. Por favor usa una imagen más pequeña.');
+    return;
+  }
+  fileName = file.name;
+  const reader = new FileReader();
+  reader.onload = e => {
+    fileB64 = e.target.result;
+    const zone = document.getElementById('upload-zone');
+    zone.classList.add('filled');
+    document.getElementById('upload-txt').textContent = '✓ ' + fileName;
+  };
+  reader.readAsDataURL(file);
+}
+
+async function enviar() {
+  const nombre  = document.getElementById('f-nombre').value.trim();
+  const correo  = document.getElementById('f-correo').value.trim();
+  const celular = document.getElementById('f-celular').value.trim();
+  const ciudad  = document.getElementById('f-ciudad').value.trim();
+  const errEl   = document.getElementById('f-error');
+
+  if (!nombre || !correo || !celular || !ciudad) {
+    errEl.textContent = 'Por favor completa todos los campos obligatorios.';
+    errEl.style.display = 'block'; return;
+  }
+  if (!fileB64) {
+    errEl.textContent = 'Por favor adjunta el comprobante de pago.';
+    errEl.style.display = 'block'; return;
+  }
+  errEl.style.display = 'none';
+
+  const btn = document.getElementById('btn-enviar');
+  btn.textContent = 'Enviando...'; btn.disabled = true;
+
+  try {
+    await fetch('https://script.google.com/macros/s/AKfycbwpakQrxgAFxIDBxx2NTM7kMoXcBFgSldD9tF0vebovf1wZ8vXlkkNx3jPCD2wJI__o7w/exec', {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        nombre, correo, celular, ciudad,
+        modulo: moduloSel,
+        precio: precioSel,
+        metodo: metodoPago,
+        comprobante: fileB64,
+        nombreArchivo: fileName,
+        origen: 'web'
+      })
+    });
+  } catch(e) {}
+
+  document.getElementById('exito-modulo').textContent = moduloSel;
+  document.getElementById('view-formulario').style.display = 'none';
+  document.getElementById('view-exito').style.display = 'block';
+  window.scrollTo(0,0);
+}
+</script>
+</body>
+</html>
