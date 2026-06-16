@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>HENLI — Software para nutricionistas</title>
+<title>HENLI — Herramienta para Nutricionistas de Listas de Intercambios - Software en Excel</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet"/>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -11,9 +11,10 @@ body{font-family:'Inter',sans-serif;background:#f2f7f3;color:#1a1a1a;min-height:
 
 /* HERO */
 .hero{background:#1a5c2e;padding:44px 24px 40px;text-align:center}
-.logo-wrap{width:80px;height:80px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
-.hero h1{color:#fff;font-size:26px;font-weight:900;letter-spacing:-0.5px;margin-bottom:6px}
-.hero p{color:#a8d5b5;font-size:14px;max-width:380px;margin:0 auto}
+.logo-wrap{width:80px;height:80px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:36px}
+.hero h1{color:#fff;font-size:26px;font-weight:900;letter-spacing:-0.5px;margin-bottom:4px}
+.hero .subtitle{color:#a8d5b5;font-size:12px;max-width:420px;margin:0 auto;line-height:1.4}
+.hero p{color:#a8d5b5;font-size:14px;max-width:380px;margin:8px auto 0}
 
 /* NAV STEPS */
 .steps{display:flex;background:#fff;border-bottom:1px solid #e0e8e2}
@@ -54,12 +55,12 @@ body{font-family:'Inter',sans-serif;background:#f2f7f3;color:#1a1a1a;min-height:
 .section-label{font-size:12px;font-weight:700;color:#444;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
 
 /* MÉTODOS DE PAGO */
-.pay-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.pay-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
 .pay-opt{border:1.5px solid #ddd;border-radius:10px;padding:14px 12px;text-align:center;cursor:pointer;transition:all .15s;background:#fafafa}
 .pay-opt:hover{border-color:#1a5c2e}
 .pay-opt.active{border-color:#1a5c2e;background:#eaf3de}
 .pay-opt .pay-icon{font-size:26px;margin-bottom:6px}
-.pay-opt .pay-name{font-size:13px;font-weight:700;color:#1a3320}
+.pay-opt .pay-name{font-size:12px;font-weight:700;color:#1a3320}
 .pay-info-box{background:#f4fbf6;border:1px solid #c4ddc8;border-radius:10px;padding:16px;margin-bottom:16px}
 .pay-info-box p{font-size:13px;color:#333;margin-bottom:5px;line-height:1.5}
 .pay-info-box strong{color:#1a5c2e}
@@ -97,7 +98,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:#aaa}
 @media(max-width:500px){
   .form-row{grid-template-columns:1fr}
   .modules-grid{grid-template-columns:1fr}
-  .pay-grid{grid-template-columns:1fr 1fr}
+  .pay-grid{grid-template-columns:1fr}
   .hero h1{font-size:20px}
 }
 </style>
@@ -105,20 +106,10 @@ footer{text-align:center;padding:24px;font-size:12px;color:#aaa}
 <body>
 
 <div class="hero">
-  <div class="logo-wrap">
-    <svg width="48" height="48" viewBox="0 0 100 100" fill="none">
-      <rect x="8" y="5" width="54" height="68" rx="6" stroke="#1a5c2e" stroke-width="7" fill="white"/>
-      <rect x="18" y="44" width="30" height="22" rx="3" stroke="#1a5c2e" stroke-width="5" fill="none"/>
-      <line x1="28" y1="44" x2="28" y2="66" stroke="#1a5c2e" stroke-width="4"/>
-      <line x1="38" y1="44" x2="38" y2="66" stroke="#1a5c2e" stroke-width="4"/>
-      <line x1="18" y1="55" x2="48" y2="55" stroke="#1a5c2e" stroke-width="4"/>
-      <text x="16" y="38" font-family="Arial" font-weight="900" font-size="28" fill="#1a5c2e">H</text>
-      <circle cx="70" cy="64" r="22" stroke="#1a5c2e" stroke-width="6" fill="white"/>
-      <text x="59" y="71" font-family="Arial" font-size="18" fill="#1a5c2e">🍴</text>
-    </svg>
-  </div>
+  <div class="logo-wrap">🥗</div>
   <h1>HENLI</h1>
-  <p>Software en Excel para nutricionistas — herramientas clínicas y de rotulado</p>
+  <div class="subtitle">Herramienta para Nutricionistas de Listas de Intercambios</div>
+  <p>Software en Excel — herramientas clínicas y de rotulado</p>
 </div>
 
 <div class="steps">
@@ -198,7 +189,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:#aaa}
       <div class="panel-sub" id="pago-precio"></div>
 
       <div class="divider"></div>
-      <div class="section-label">Método de pago</div>
+      <div class="section-label">💰💳 Métodos de pago 💳💰</div>
 
       <div class="pay-grid">
         <div class="pay-opt" id="opt-nequi" onclick="elegirPago('Nequi')">
@@ -209,21 +200,32 @@ footer{text-align:center;padding:24px;font-size:12px;color:#aaa}
           <div class="pay-icon">🏦</div>
           <div class="pay-name">Bancolombia</div>
         </div>
+        <div class="pay-opt" id="opt-daviplata" onclick="elegirPago('Daviplata')">
+          <div class="pay-icon">💳</div>
+          <div class="pay-name">Daviplata</div>
+        </div>
       </div>
 
       <div id="info-nequi" style="display:none" class="pay-info-box">
-        <p><strong>Nequi</strong></p>
-        <p>Número: <strong>301 661 7150</strong></p>
-        <p>Nombre: <strong>HENLI Nutrición</strong></p>
+        <p><strong>📱 Nequi</strong></p>
+        <p>Número: <strong>320 513 7600</strong></p>
+        <p>Titular: <strong>José Osorio</strong></p>
         <p class="note">Transfiere el valor exacto y guarda la captura de pantalla del comprobante.</p>
       </div>
 
       <div id="info-bancolombia" style="display:none" class="pay-info-box">
-        <p><strong>Bancolombia — Transferencia</strong></p>
+        <p><strong>🏦 Bancolombia</strong></p>
         <p>Tipo de cuenta: <strong>Ahorros</strong></p>
-        <p>Número: <strong>XXX-XXXXXX-XX</strong></p>
-        <p>Titular: <strong>HENLI Nutrición</strong></p>
+        <p>Número: <strong>912 891 466 07</strong></p>
+        <p>Titular: <strong>José Carlos Osorio Barrios</strong></p>
         <p class="note">Transfiere el valor exacto y guarda el comprobante de la transacción.</p>
+      </div>
+
+      <div id="info-daviplata" style="display:none" class="pay-info-box">
+        <p><strong>💳 Daviplata</strong></p>
+        <p>Llave BREVE: <strong>320 513 7600</strong></p>
+        <p>Titular: <strong>José Osorio Barrios</strong></p>
+        <p class="note">Transfiere el valor exacto y guarda la captura de pantalla del comprobante.</p>
       </div>
 
       <button class="btn-primary" id="btn-continuar" onclick="irFormulario()" disabled>Ya realicé el pago — continuar</button>
@@ -290,7 +292,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:#aaa}
         <h2>¡Registro completado!</h2>
         <p>Tu compra de <strong id="exito-modulo" style="color:#1a5c2e"></strong> fue registrada con éxito.<br><br>El equipo de HENLI revisará tu pago y te enviará el archivo a tu correo en menos de 24 horas hábiles.</p>
         <div class="social-row">
-          <a class="btn-wa" href="https://wa.me/573016617150" target="_blank">💬 Contactar por WhatsApp</a>
+          <a class="btn-wa" href="https://wa.me/573205137600" target="_blank">💬 Contactar por WhatsApp</a>
           <a class="btn-rr" href="https://linktr.ee/henli_excel" target="_blank">🔗 Redes sociales HENLI</a>
         </div>
       </div>
@@ -298,7 +300,7 @@ footer{text-align:center;padding:24px;font-size:12px;color:#aaa}
   </div>
 </div>
 
-<footer>HENLI · Software para nutricionistas · 2026</footer>
+<footer>HENLI · Herramienta para Nutricionistas de Listas de Intercambios · 2026</footer>
 
 <script>
 let moduloSel = '';
@@ -328,8 +330,10 @@ function elegirPago(met) {
   metodoPago = met;
   document.getElementById('opt-nequi').classList.toggle('active', met==='Nequi');
   document.getElementById('opt-bancolombia').classList.toggle('active', met==='Bancolombia');
+  document.getElementById('opt-daviplata').classList.toggle('active', met==='Daviplata');
   document.getElementById('info-nequi').style.display = met==='Nequi' ? 'block' : 'none';
   document.getElementById('info-bancolombia').style.display = met==='Bancolombia' ? 'block' : 'none';
+  document.getElementById('info-daviplata').style.display = met==='Daviplata' ? 'block' : 'none';
   document.getElementById('btn-continuar').disabled = false;
 }
 
@@ -347,8 +351,8 @@ function volverModulos() {
   document.getElementById('view-modules').style.display = 'block';
   metodoPago = '';
   document.getElementById('btn-continuar').disabled = true;
-  ['opt-nequi','opt-bancolombia'].forEach(id => document.getElementById(id).classList.remove('active'));
-  ['info-nequi','info-bancolombia'].forEach(id => document.getElementById(id).style.display = 'none');
+  ['opt-nequi','opt-bancolombia','opt-daviplata'].forEach(id => document.getElementById(id).classList.remove('active'));
+  ['info-nequi','info-bancolombia','info-daviplata'].forEach(id => document.getElementById(id).style.display = 'none');
   setStep(1);
   window.scrollTo(0,0);
 }
